@@ -28,8 +28,8 @@ This project demonstrates a simple use case of SignalR in a .NET application. Th
 ## Installation
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/SignalRDemo.git
-   cd SignalRDemo
+   git clone https://github.com/Shadi201711/SignalR-ITI-Lab.git
+   cd SignalR-ITI-Lab
    ```
 
 2. Restore the dependencies:
