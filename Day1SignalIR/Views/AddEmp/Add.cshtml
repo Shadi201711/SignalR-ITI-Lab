@@ -1,0 +1,63 @@
+﻿@model Day1SignalIR.Models.Table_1
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Add</h1>
+
+<h4>Table_1</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Age" class="control-label"></label>
+            <input asp-for="Age" class="form-control" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Address" class="control-label"></label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div>
+            <input id="submitBtn" type="button" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+
+    <script>
+        var con = new signalR.HubConnectionBuilder().withUrl("/emphub").build();
+
+        con.start();
+
+        function send() {
+            var obj = {
+                name: $("#Name").val(),
+                age: +$("#Age").val(),
+                address: $("#Address").val()
+            };
+
+            con.invoke("sendEmp", obj)
+                .catch(function (err) {
+                    return console.error(err.toString());
+                });
+        }
+
+        $("#submitBtn").click(function () {
+            send();
+        });
+    </script>
+}

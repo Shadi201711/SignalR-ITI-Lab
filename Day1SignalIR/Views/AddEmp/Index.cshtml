@@ -1,0 +1,42 @@
+﻿@model List<Day1SignalIR.Models.Table_1>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Employee Data</h1>
+
+
+<table class="table">
+    <thead class="table-light">
+        <th>Id</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+    </thead>
+  <tbody>
+    @foreach (var emp in Model)
+    {
+        <tr>
+            <td>@emp.Id</td>
+            <td>@emp.Name</td>
+            <td>@emp.Age</td>
+            <td>@emp.Address</td>
+        </tr>
+    }
+</table>
+
+@section Scripts {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+
+    <script>
+        con = new signalR.HubConnectionBuilder().withUrl("/emphub").build();
+
+        con.start();
+
+        con.on("newEmp", function (emp) {
+            var newRow = "<tr><td>" + emp.id + "</td><td>" + emp.name + "</td><td>" + emp.age + "</td><td>" + emp.address + "</td></tr>";
+            $("table tbody").append(newRow);
+        });
+
+    </script>
+}
